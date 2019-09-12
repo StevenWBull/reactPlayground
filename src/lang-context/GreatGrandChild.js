@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import languageSpecificCopy from './languageSpecificCopy';
-import { copyFile } from 'fs';
 
 export default class GreatGrandChild extends Component {
   render() {
