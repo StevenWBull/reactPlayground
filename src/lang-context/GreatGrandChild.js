@@ -7,7 +7,7 @@ export default class GreatGrandChild extends Component {
     const copy = languageSpecificCopy['en-US'] || {};
     return (
       <section>
-        <h2>copy.title</h2>
+        <h2>{copy.title}</h2>
         <p>{copy.body}</p>
       </section>
     )
