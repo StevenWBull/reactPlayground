@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import ValidationError from  './ValidationError';
 
 export default class RegistrationForm extends Component {
   constructor(props) {
@@ -56,7 +57,7 @@ export default class RegistrationForm extends Component {
     }
   }
 
-  valideRepeatPassword = () => {
+  validateRepeatPassword = () => {
     const repeatPassword = this.state.repeatPassword.value;
     const password = this.state.password.value.trim();
 
@@ -74,17 +75,20 @@ export default class RegistrationForm extends Component {
           <label htmlFor="name">Name *</label>
           <input type="text" className="registration__control"
             name="name" id="name" onChange={ e => this.updateName(e.target.value)} />
+            <ValidationError message={this.validateName()} />
         </div>
         <div className="form-group">
            <label htmlFor="password">Password *</label>
            <input type="password" className="registration__control"
             name="password" id="password" onChange={ e => this.updatePassword(e.target.value)} />
            <div className="registration__hint">6 to 72 characters, must include a number</div>
+           <ValidationError message={this.validatePassword()} />
         </div>
         <div className="form-group">
           <label htmlFor="repeatPassword">Repeat Password *</label>
           <input type="password" className="registration__control"
             name="repeatPassword" id="repeatPassword" onChange={ e => this.updateRepeatPassword(e.target.value)}/>
+            <ValidationError message={this.validateRepeatPassword()} />
         </div>
  
         <div className="registration__button__group">
