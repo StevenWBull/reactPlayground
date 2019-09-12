@@ -6,27 +6,30 @@ export default class RegistrationForm extends Component {
     super(props);
     this.state = {
       name: {
-        value: ''
+        value: '',
+        touched: false
       },
       password: {
-        value: ''
+        value: '',
+        touched: false
       },
       repeatPassword: {
-        value: ''
+        value: '',
+        touched: false
       }
     }
   }
 
   updateName = (name) => {
-    this.setState({name: {value: name}});
+    this.setState({name: {value: name, touched: true}});
   }
 
   updatePassword = (password) => {
-    this.setState({password: {value: password}});
+    this.setState({password: {value: password, touched: true}});
   }
 
   updateRepeatPassword = (reapeatPassword) => {
-    this.setState({repeatPassword: {value: reapeatPassword}});
+    this.setState({repeatPassword: {value: reapeatPassword, touched: true}});
   }
 
   handleSubmit = (event) => {
@@ -75,27 +78,31 @@ export default class RegistrationForm extends Component {
           <label htmlFor="name">Name *</label>
           <input type="text" className="registration__control"
             name="name" id="name" onChange={ e => this.updateName(e.target.value)} />
-            <ValidationError message={this.validateName()} />
+            {this.state.name.touched && (<ValidationError message={this.validateName()} />)}
         </div>
         <div className="form-group">
            <label htmlFor="password">Password *</label>
            <input type="password" className="registration__control"
             name="password" id="password" onChange={ e => this.updatePassword(e.target.value)} />
            <div className="registration__hint">6 to 72 characters, must include a number</div>
-           <ValidationError message={this.validatePassword()} />
+            {this.state.password.touched && (<ValidationError message={this.validatePassword()} />)}
         </div>
         <div className="form-group">
           <label htmlFor="repeatPassword">Repeat Password *</label>
           <input type="password" className="registration__control"
             name="repeatPassword" id="repeatPassword" onChange={ e => this.updateRepeatPassword(e.target.value)}/>
-            <ValidationError message={this.validateRepeatPassword()} />
+            {this.state.repeatPassword.touched && (<ValidationError message={this.validateRepeatPassword()} />)}
         </div>
  
         <div className="registration__button__group">
          <button type="reset" className="registration__button">
              Cancel
          </button>
-         <button type="submit" className="registration__button">
+         <button type="submit" 
+                 className="registration__button"
+                 disabled={
+                   this.validateName() || this.validatePassword() || this.validateRepeatPassword()
+                 }>
              Save
          </button>
         </div>
