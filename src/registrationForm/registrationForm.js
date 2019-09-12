@@ -1,9 +1,22 @@
 import React, { Component } from 'react'
 
 export default class RegistrationForm extends Component {
+  constructor(props) {
+    super(props);
+    this.nameInput = React.createRef();
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const password = event.target.password.value;
+    console.log('Name is: ', name);
+    console.log('Password is: ', password);
+  }
+
   render () {
     return (
-      <form className="registration">
+      <form className="registration" onSubmit={ e => this.handleSubmit(e) }>
         <h2>Register</h2>
         <div className="registration__hint">* required field</div>  
         <div className="form-group">
