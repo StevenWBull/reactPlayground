@@ -3,15 +3,66 @@ import React, { Component } from 'react'
 export default class RegistrationForm extends Component {
   constructor(props) {
     super(props);
-    this.nameInput = React.createRef();
+    this.state = {
+      name: {
+        value: ''
+      },
+      password: {
+        value: ''
+      },
+      repeatPassword: {
+        value: ''
+      }
+    }
   }
 
-  handleSubmit(event) {
+  updateName = (name) => {
+    this.setState({name: {value: name}});
+  }
+
+  updatePassword = (password) => {
+    this.setState({password: {value: password}});
+  }
+
+  updateRepeatPassword = (reapeatPassword) => {
+    this.setState({repeatPassword: {value: reapeatPassword}});
+  }
+
+  handleSubmit = (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
-    const password = event.target.password.value;
-    console.log('Name is: ', name);
-    console.log('Password is: ', password);
+    const { name, password, repeatPassword } = this.state;
+    console.log(name.value);
+    console.log(password.value);
+    console.log(repeatPassword.value);
+  }
+
+  validateName = (fieldValue) => {
+    const name = this.state.name.value.trim();
+    if ( name.length === 0 ) {
+      return 'Name is required';
+    } else if ( name.length < 3 ) {
+      return 'Name must be at least 3 characters long'
+    }
+  }
+
+  validatePassword = () => {
+    const password = this.state.password.value.trim();
+    if (password.length === 0) {
+      return 'Password is required';
+    } else if (password.length < 6 || password.length > 72) {
+      return 'Password must be between 6 and 72 characters long';
+    } else if (!password.match(/[0-9]/)) {
+      return 'Password must contain at least one number';
+    }
+  }
+
+  valideRepeatPassword = () => {
+    const repeatPassword = this.state.repeatPassword.value;
+    const password = this.state.password.value.trim();
+
+    if (repeatPassword !== password) {
+      return 'Passwords do not match';
+    }
   }
 
   render () {
@@ -22,18 +73,18 @@ export default class RegistrationForm extends Component {
         <div className="form-group">
           <label htmlFor="name">Name *</label>
           <input type="text" className="registration__control"
-            name="name" id="name"/>
+            name="name" id="name" onChange={ e => this.updateName(e.target.value)} />
         </div>
         <div className="form-group">
            <label htmlFor="password">Password *</label>
            <input type="password" className="registration__control"
-            name="password" id="password"/>
+            name="password" id="password" onChange={ e => this.updatePassword(e.target.value)} />
            <div className="registration__hint">6 to 72 characters, must include a number</div>
         </div>
         <div className="form-group">
           <label htmlFor="repeatPassword">Repeat Password *</label>
           <input type="password" className="registration__control"
-            name="repeatPassword" id="repeatPassword"/>
+            name="repeatPassword" id="repeatPassword" onChange={ e => this.updateRepeatPassword(e.target.value)}/>
         </div>
  
         <div className="registration__button__group">
